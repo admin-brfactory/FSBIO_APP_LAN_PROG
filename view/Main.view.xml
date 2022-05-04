@@ -104,7 +104,7 @@
 					</Toolbar>
 				</table:extension>
 				<table:columns>
-					<table:Column headerSpan="4" width="10rem">
+					<table:Column headerSpan="4" width="auto">
 						<table:multiLabels>
 							<Label text=""/>
 							<Label text="{i18n>cliente}" textAlign="Center" width="100%"/>
@@ -113,7 +113,7 @@
 							<Text text="{progView>DEN_CLIENTE}" textAlign="Center" width="100%"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="6rem">
+					<table:Column width="auto">
 						<table:multiLabels>
 							<Label text=""/>
 							<Label text="{i18n>incoterm}" textAlign="Center" width="100%"/>
@@ -122,7 +122,7 @@
 							<Text text="{progView>INCOTERMS}" textAlign="Center" width="100%"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="auto">
 						<table:multiLabels>
 							<Label text=""/>
 							<Label text="{i18n>caminhao}" textAlign="Center" width="100%"/>
@@ -213,7 +213,7 @@
 					</table:Column>
 					<table:Column width="auto">
 						<table:multiLabels>
-							<Text text="{path: 'progView>/diaMes/DIASAB', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{path: 'progView>/diaMes/DIASAB', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
 							<Label text="{i18n>sab}" textAlign="Center" width="100%"/>
 						</table:multiLabels>
 						<table:template>
@@ -224,14 +224,14 @@
 					<table:Column width="auto">
 						<table:multiLabels>
 							<Label text=" {path: 'progView>/diaMes/DIADOM', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
-							<Text text="{i18n>dom}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>dom}" textAlign="Center" width="100%"/>
 						</table:multiLabels>
 						<table:template>
 							<Input change="checarCarga" value="{progView>DOM}" valueState="{path:'progView>STATUS_DOM', formatter: '.formatter.setInputColor'}"
 								showValueStateMessage="false" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
 						</table:template>
 					</table:Column>
-					<table:Column width="10rem">
+					<table:Column width="auto">
 						<table:multiLabels>
 							<Label text=""/>
 							<Label text="{i18n>repetirProg}" textAlign="Center" width="100%"/>
@@ -242,7 +242,7 @@
 							</MultiComboBox>
 						</table:template>
 					</table:Column>
-					<table:Column width="10rem">
+					<table:Column width="auto">
 						<table:multiLabels>
 							<Label text=""/>
 							<Label text="{i18n>pagamento}" textAlign="Center" width="100%"/>
@@ -253,7 +253,7 @@
 							</Select>
 						</table:template>
 					</table:Column>
-					<table:Column headerSpan="3" width="6rem">
+					<table:Column headerSpan="3" width="auto">
 						<table:multiLabels>
 							<Label text="Credito" textAlign="Center" width="100%"/>
 							<Label text="{i18n>credito}" textAlign="Center" width="100%"/>
@@ -262,7 +262,7 @@
 							<Text text="{progView>CREDITO}" textAlign="Center" width="100%"/>
 						</table:template>
 					</table:Column>
-					<table:Column width="8rem">
+					<table:Column width="auto">
 						<table:multiLabels >
 							<Label text=""/>
 							<Label text="{i18n>credPend}" textAlign="Center" width="100%"/>

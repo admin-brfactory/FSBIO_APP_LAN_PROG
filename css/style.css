@@ -1,1 +1,61 @@
 /* Enter your custom styles here */
+
+@media (max-width: 1366px) {
+    .sapUiSizeCompact .sapUiTableCell.sapMLabel,
+    .sapUiSizeCondensed .sapUiTableCell .sapMLabel,
+    .sapUiSizeCompact .sapUiTableColCell>.sapMLabel,
+    .sapUiSizeCondensed .sapUiTableColCell>.sapMLabel {
+        font-size: 0.575rem !important;
+    }
+    .sapMTitle {
+    	font-size: 0.775rem !important;
+    }
+    .sapMText {
+    	font-size: 0.575rem !important;
+    }
+    .sapMLabel {
+    	font-size: 0.575rem !important;
+    }
+    .sapMSelectListItemBase {
+    	font-size: 0.575rem !important;
+    }
+    .sapMSlt>.sapMSltLabel {
+    	font-size: 0.575rem !important;
+    }
+    .sapMInputBaseInner {
+    	font-size: 0.575rem !important;
+    }
+    .sapUiSizeCompact .sapMSLITitleOnly {
+    	font-size: 0.575rem !important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .sapUiSizeCompact .sapUiTableCell.sapMLabel,
+    .sapUiSizeCondensed .sapUiTableCell .sapMLabel,
+    .sapUiSizeCompact .sapUiTableColCell>.sapMLabel,
+    .sapUiSizeCondensed .sapUiTableColCell>.sapMLabel {
+        font-size: 0.675rem !important;
+    }
+    .sapMTitle {
+    	font-size: 0.875rem !important;
+    }
+    .sapMText {
+    	font-size: 0.675rem !important;
+    }
+    .sapMLabel {
+    	font-size: 0.675rem !important;
+    }
+    .sapMSelectListItemBase {
+    	font-size: 0.675rem !important;
+    }
+    .sapMSlt>.sapMSltLabel {
+    	font-size: 0.675rem !important;
+    }
+    .sapMInputBaseInner {
+    	font-size: 0.675rem !important;
+    }
+    .sapUiSizeCompact .sapMSLITitleOnly {
+    	font-size: 0.675rem !important;
+    }
+}

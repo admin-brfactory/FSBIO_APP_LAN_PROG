@@ -56,7 +56,8 @@ sap.ui.define([
 			this.getProgramacao();
 
 		},
-
+		
+		// Função usada para repetir programação
 		onRepetirProg: function(oEvent) {
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
@@ -164,7 +165,7 @@ sap.ui.define([
 		salvarProg: function() {
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
-			var numSemana = oViewModel.getProperty("/numSemanaBind"); // oViewModel.getProperty("/numSemana");
+			var numSemana = oViewModel.getProperty("/numSemanaBind");
 			this.guardaDadosTela(numSemana);
 			var tabela = this.getView().getModel("progView").getProperty("/tabProgGeral");
 			var tabProg = oViewModel.getProperty("/tabProg");
@@ -211,59 +212,10 @@ sap.ui.define([
 			});
 		},
 
-		// dadosEncaixe: function() {
-		// 	var oModel = this.getOwnerComponent().getModel();
-		// 	var oViewModel = this.getView().getModel("progView");
-		// 	var usuario = sap.ushell.Container.getService("UserInfo").getId();
-		// 	var semana = oViewModel.getProperty("/numSemanaAtual");
-		// 	var produto = this.getView().byId('produto').getSelectedKey();
-		// 	var sUrl = "/GET_PROGRAMACAOSet(USUARIO='" + usuario + "',SEMANA='" + semana + "',PRODUTO='" + produto + "')";
-
-		// 	sap.ui.core.BusyIndicator.show();
-
-		// 	oModel.read(sUrl, {
-		// 		success: function(oData) {
-		// 			sap.ui.core.BusyIndicator.hide();
-
-		// 			if (oData.DADOS_VENDEDOR) {
-		// 				var vendedor = JSON.parse(oData.DADOS_VENDEDOR);
-		// 				oViewModel.setProperty("/vendedor", vendedor);
-		// 			}
-
-		// 			if (oData.LISTA_PRODUTOS) {
-		// 				var listaProdutos = JSON.parse(oData.LISTA_PRODUTOS)
-		// 				var vazio = {
-		// 					COD_MATERIAL: "",
-		// 					DENOM_MATERIAL: ""
-		// 				};
-
-		// 				listaProdutos.unshift(vazio);
-
-		// 				oViewModel.setProperty("/produtosEncaixe", listaProdutos);
-		// 			}
-
-		// 			if (oData.LISTA_CAMINHOES) {
-		// 				var listaCaminhoes = JSON.parse(oData.LISTA_CAMINHOES);
-		// 				var vazio = {
-		// 					CODCAM: "",
-		// 					DESCAM: ""
-		// 				};
-
-		// 				listaCaminhoes.unshift(vazio);
-
-		// 				oViewModel.setProperty("/caminhoesEncaixe", listaCaminhoes);
-		// 			}
-		// 		}.bind(this),
-		// 		error: function(oError) {
-		// 			sap.ui.core.BusyIndicator.hide();
-		// 		}
-		// 	});
-		// },
-
 		salvarEncaixe: function() {
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
-			var vendedor = oViewModel.getProperty("/vendedor").COD_VENDEDOR; //TODO this.getView().byId("vendedor").getText();
+			var vendedor = oViewModel.getProperty("/vendedor").COD_VENDEDOR;
 			var usuario = sap.ushell.Container.getService("UserInfo").getId();
 			var produto = this.getView().byId("listProdutoEncaixe").getSelectedKey();
 			var caminhao = this.getView().byId("listiCaminhaoEncaixe").getSelectedKey();
@@ -327,53 +279,20 @@ sap.ui.define([
 			return ano + mes + dia;
 		},
 
-		// onEncaixar: function() {
-		// 	var oModel = this.getOwnerComponent().getModel();
-		// 	var oViewModel = this.getView().getModel("progView");
-		// 	var usuario = sap.ushell.Container.getService("UserInfo").getId();
-		// 	var data = new Date();
-		// 	var semana = oViewModel.getProperty("/numSemana");
-		// 	var getLinha = this.getView().byId("table1").getSelectedIndices();
-		// 	var linhaSelecionadaBind = this.getView().byId("table1").getBindingInfo("rows").binding.getPath() + "/" + getLinha[0];
-		// 	var oDadosSelec = oViewModel.getProperty(linhaSelecionadaBind);
-		// 	var vendedor = oViewModel.getProperty("/vendedor/COD_VENDEDOR");
-		// 	var centro = oDadosSelec.WERKS;
-		// 	var incoterm = oDadosSelec.INCOTERMS;
-		// 	var cliente = oDadosSelec.CLIENTE;
-		// 	var material = oViewModel.getProperty("/produtoSelecionado");
-		// 	var sURL = "/GET_CARGASet(SEMANA='" + semana + "',VENDEDOR='" + vendedor + "',MATERIAL='" + material + "',CENTRO='" + centro +
-		// 		"',INCOTERM='" + incoterm + "',CLIENTE='" + cliente + "')";
-
-		// 	sap.ui.core.BusyIndicator.show();
-		// 	oModel.read(sURL, {
-		// 		success: function(oData) {
-		// 			sap.ui.core.BusyIndicator.hide();
-
-		// 			this.dadosEncaixe();
-
-		// 		}.bind(this),
-
-		// 		error: function(oError) {
-		// 			sap.ui.core.BusyIndicator.hide();
-
-		// 		}
-		// 	});
-		// },
-
 		getCargas: function() {
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
 			var usuario = sap.ushell.Container.getService("UserInfo").getId();
 			var data = new Date();
-			var semana = oViewModel.getProperty("/numSemana"); //"202215"
+			var semana = oViewModel.getProperty("/numSemana");
 			var getLinha = this.getView().byId("table1").getSelectedIndices();
 			var linhaSelecionadaBind = this.getView().byId("table1").getBindingInfo("rows").binding.getPath() + "/" + getLinha[0];
 			var oDadosSelec = oViewModel.getProperty(linhaSelecionadaBind);
-			var vendedor = oViewModel.getProperty("/vendedor/COD_VENDEDOR"); //"0000700000"
-			var centro = oDadosSelec.WERKS; //"1001" 
-			var incoterm = oDadosSelec.INCOTERMS; //"FOB" 
-			var cliente = oDadosSelec.CLIENTE; //"0000400004" 
-			var material = oViewModel.getProperty("/produtoSelecionado"); //"000000000000300002"
+			var vendedor = oViewModel.getProperty("/vendedor/COD_VENDEDOR");
+			var centro = oDadosSelec.WERKS;
+			var incoterm = oDadosSelec.INCOTERMS;
+			var cliente = oDadosSelec.CLIENTE; 
+			var material = oViewModel.getProperty("/produtoSelecionado");
 			var sURL = "/GET_CARGASet(SEMANA='" + semana + "',VENDEDOR='" + vendedor + "',MATERIAL='" + material + "',CENTRO='" + centro +
 				"',INCOTERM='" + incoterm + "',CLIENTE='" + cliente + "')";
 
@@ -427,7 +346,6 @@ sap.ui.define([
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
 			var indiceSemana = oViewModel.getProperty("/indiceSemana");
-			//indiceSemana = 0 // TODO APAGAR
 			var tabProgGeral = oViewModel.getProperty("/tabProgGeral");
 			var semana;
 
@@ -570,9 +488,9 @@ sap.ui.define([
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
 			oViewModel.setProperty("/produtoSelecionado", this.getView().byId("produto").getSelectedKey());
-			var usuario = oViewModel.getProperty("/vendedor/COD_VENDEDOR"); //sap.ushell.Container.getService("UserInfo").getId();
-			var semana = oViewModel.getProperty("/numSemanaAtual"); //"20220701";
-			var produto = this.getView().byId('produto').getSelectedKey(); //"300002" 
+			var usuario = oViewModel.getProperty("/vendedor/COD_VENDEDOR");
+			var semana = oViewModel.getProperty("/numSemanaAtual");
+			var produto = this.getView().byId('produto').getSelectedKey();
 			var sUrl = "/GET_PROGRAMACAOSet(USUARIO='" + usuario + "',SEMANA='" + semana + "',PRODUTO='" + produto + "')";
 
 			sap.ui.core.BusyIndicator.show();
@@ -583,11 +501,6 @@ sap.ui.define([
 
 					if (oData.TABELA_PROGRAMACAO) {
 						var tabelaProgramacao = JSON.parse(oData.TABELA_PROGRAMACAO);
-
-						// if (tabelaProgramacao[0].SEMANA != '000000') {
-						// 	tabelaProgramacao[2].DADOS_SEMANA = tabelaProgramacao[1].DADOS_SEMANA
-						// 	tabelaProgramacao[2].COTAS_DIARIAS_SEM = tabelaProgramacao[1].COTAS_DIARIAS_SEM
-						// }
 					}
 
 					oViewModel.setProperty("/tabProgGeral", tabelaProgramacao);
@@ -852,7 +765,8 @@ sap.ui.define([
 			}
 			oViewModel.setProperty("/diaMes", diaMesArray);
 		},
-
+		
+		// Evento disparado ao mudar a semana em tela 
 		moveSemana: function(NextPrev) {
 			var oViewModel = this.getView().getModel("progView");
 			var numSemana = oViewModel.getProperty("/numSemanaBind");
@@ -923,7 +837,7 @@ sap.ui.define([
 			var oViewModel = this.getView().getModel("progView");
 			var data = new Date();
 			var semanaAtual = oViewModel.getProperty("/numSemanaAtual");
-			var numSemana = oViewModel.getProperty("/numSemanaBind"); //numSemana
+			var numSemana = oViewModel.getProperty("/numSemanaBind");
 
 			if (semanaAtual == numSemana) {
 				oViewModel.setProperty("/inpEnabled", false);
@@ -1065,7 +979,6 @@ sap.ui.define([
 		btnOpenEncaixe: function() {
 			this.openEncaixe().open();
 			this.getCargas();
-			// this.onEncaixar();
 		},
 
 		closeEncaixe: function(oEvent) {
@@ -1121,6 +1034,7 @@ sap.ui.define([
 			this.getProgramacao();
 		},
 
+		//Verifica se o valor do campo é númerico
 		checaNumerico: function(sCell) {
 			var regExp = /[a-zA-Z]/g;
 			var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?°¨¨ºª₢£¢¬§`~´çÇ]+/;

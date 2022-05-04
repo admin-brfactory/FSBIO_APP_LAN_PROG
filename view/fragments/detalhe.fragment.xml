@@ -1,0 +1,24 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:table="sap.ui.table">
+	<Dialog id="detalhefragment" contentWidth="auto" contentHeight="auto" stretch="false" showHeader="false"
+		icon="sap-icon://exit-full-screen">
+		<VBox class="sapUiSmallMargin">
+			<OverflowToolbar >
+				<ToolbarSpacer/>
+				<Title text="{i18n>detalhe}" textAlign="Center" titleStyle="H2"/>
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+			<HBox justifyContent="Center" class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop sapUiSmallMarginBottom">
+				<Title text="{i18n>fraseDetalhe}" textAlign="Center" titleStyle="H5"/>
+			</HBox>
+			<HBox justifyContent="Center" class="sapUiSmallMarginBeginEnd sapUiSmallMarginBottom">
+				<Button id="idCancelar" tooltip="{i18n>tooltipSolicitar}"  text="{i18n>btnCancelar}" type="Default"
+					class="sapUiTinyMarginEnd" press="btnOpenCancelar"/>
+				<Button id="idEncaixar" tooltip="{i18n>tooltipEncaixar}" text="{i18n>btnEncaixar}" type="Default"
+					class="sapUiSmallMarginBegin" press="btnOpenEncaixe"/>
+			</HBox>
+		</VBox>
+		<endButton >
+			<Button text="{i18n>btnSair}" type="Ghost" 	class="sapUiSmallMarginBeginEnd" press="onCloseDialog('detalhefragment')"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

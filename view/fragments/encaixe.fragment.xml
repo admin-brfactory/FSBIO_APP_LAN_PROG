@@ -1,0 +1,118 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:table="sap.ui.table">
+	<Dialog id="encaixefragment" contentWidth="100%" contentHeight="80%" stretch="false" showHeader="false" icon="sap-icon://exit-full-screen">
+		<VBox class="sapUiSmallMargin">
+			<OverflowToolbar >
+				<ToolbarSpacer/>
+				<Title text="{i18n>programado}" class="sapUiSmallMarginBegin" textAlign="Center" titleStyle="H2"/>
+				<ToolbarSpacer/>
+				<OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press="onCloseDialog('encaixefragment')"/>
+			</OverflowToolbar>
+			<table:Table id="table5" ariaLabelledBy="title" selectionMode="None" rows="{progView>/tblCargas}" visibleRowCount="10">
+				<table:columns>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>ordVenda}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>ORDEM_VENDA}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>produto}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>DENOM_MATERIAL}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>cliente}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>NOME_CLIENTE}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>vendedor}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>NOME_VENDEDOR}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>qtdCarregamento}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>QUANTIDADE}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>dtCarregamento}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{path: 'progView>DATA_PROGRAMACAO', formatter: '.formatter.formatDate'}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels>
+							<Label text="{i18n>frete}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>INCOTERMS}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:Table>
+			<OverflowToolbar class="sapUiSmallMarginTop">
+				<ToolbarSpacer/>
+				<Title text="{i18n>encaixe}" class="sapUiSmallMarginBegin" textAlign="Center" titleStyle="H2"/>
+				<ToolbarSpacer/>
+				<Label text="" width="2rem"/>
+			</OverflowToolbar>
+			<HBox justifyContent="Center" class="sapUiSmallMargin" width="100%">
+				<VBox  width="100%" >
+					<HBox alignItems="Center" justifyContent="Center">
+						<Label width="11rem" required="true" text="{i18n>produto}:"/>
+						<Select id="listProdutoEncaixe" width="15rem" items="{ path: 'progView>/listaProdutos'}">
+							<core:Item key="{progView>COD_MATERIAL}" text="{progView>DENOM_MATERIAL}"/>
+						</Select>
+					</HBox>
+					<HBox alignItems="Center" justifyContent="Center">
+						<Label width="11rem" required="true" text="{i18n>caminhao}:"/>
+						<Select id="listiCaminhaoEncaixe" width="15rem" items="{ path: 'progView>/listaCaminhoes'}" forceSelection="false">
+							<core:Item key="{progView>CODCAM}" text="{progView>DESCAM}"/>
+						</Select>
+					</HBox>
+					<HBox alignItems="Center" justifyContent="Center">
+						<Label width="11rem" required="true" text="{i18n>cliente}:"/>
+						<Input id="enCliente" width="15rem"/>
+					</HBox>
+				</VBox>
+				<VBox width="100%">
+					<HBox alignItems="Center" justifyContent="Center">
+						<Label width="11rem" required="true" text="{i18n>frete}:"/>
+						<Select id="enFrete" width="15rem" items="{ path: 'progView>/listIncoterm'}" forceSelection="false">
+							<core:Item key="{progView>INCO1}" text="{progView>INCO1}"/>
+						</Select>
+					</HBox>
+					<HBox alignItems="Center" justifyContent="Center">
+						<Label width="11rem" required="true" text="{i18n>qtdCarregamento}:"/>
+						<Input id="enQtdCarregamento" width="15rem"/>
+					</HBox>
+					<HBox alignItems="Center"  justifyContent="Center">
+						<Label width="11rem" required="true" text="{i18n>dtCarregamento}:"/>
+						<DatePicker id="enDtCarregamento" width="15rem" valueFormat="dd.MM.yyyy" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"
+							change="handleChange"/>
+					</HBox>
+				</VBox>
+			</HBox>
+		</VBox>
+		<endButton >
+			<Button tooltip="{i18n>tooltipGravarEnca}" text="{i18n>btnGravarEncaixe}" type="Ghost" press="salvarEncaixe" class="sapUiMediumMarginEnd"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

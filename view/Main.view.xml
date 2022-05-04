@@ -1,0 +1,294 @@
+<mvc:View controllerName="com.fsBioenergiaZLAN_PROG_ENTREGA.controller.Main" xmlns:table="sap.ui.table" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:core="sap.ui.core" height="100%">
+	<Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
+		<content>
+			<HBox>
+				<VBox class="sapUiLargeMarginTopBottom sapUiLargeMarginEnd">
+					<HBox class="sapUiMediumMarginBeginEnd">
+						<Label text="{i18n>vendedor}" design="Bold"/>
+						<Text id="vendedor" text="{progView>/vendedor/NOME_VENDEDOR}" class="sapUiTinyMarginBottom sapUiTinyMarginBegin"/>
+					</HBox>
+					<HBox class="sapUiMediumMarginBeginEnd">
+						<Label text="{i18n>produto}" design="Bold" class="sapUiTinyMargin"/>
+						<Select id="produto" width="11rem" items="{ path: 'progView>/listaProdutos'}">
+							<core:Item key="{progView>COD_MATERIAL}" text="{progView>DENOM_MATERIAL}"/>
+						</Select>
+						<Button type="Ghost" icon="sap-icon://search" class="sapUiSmallMarginBeginEnd" press="pesquisar"/>
+					</HBox>
+				</VBox>
+				<table:Table id="table2" ariaLabelledBy="title" selectionMode="None" rows="{progView>/cotasDiarias}" visibleRowCount="3" width="60%">
+					<table:columns>
+						<table:Column width="13rem">
+							<table:multiLabels>
+								<Label text="" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>CAMPO}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>seg}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>SEG}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>ter}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>TER}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>qua}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>QUA}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>qui}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>QUI}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>sex}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>SEX}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>sab}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>SAB}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+						<table:Column width="auto">
+							<table:multiLabels>
+								<Label text="{i18n>dom}" textAlign="Center" width="100%"/>
+							</table:multiLabels>
+							<table:template>
+								<Text text="{progView>DOM}" textAlign="Center" width="100%"/>
+							</table:template>
+						</table:Column>
+					</table:columns>
+				</table:Table>
+			</HBox>
+			<table:Table id="table1" selectionMode="Single" rows="{progView>/tabProg}" minAutoRowCount="1" visibleRowCountMode="Auto">
+				<table:extension>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Label text="" width="13rem"/>
+						<ToolbarSpacer/>
+						<Button id="btnAnt" text="{i18n>btnAnterior}" enabled="{progView>/btnAntEnabled}" class="sapUiLargeMarginBegin"
+							icon="sap-icon://close-command-field" press="moveSemana('anterior')"/>
+						<ToolbarSpacer/>
+						<Title text="{i18n>ProgSemana} - {path:'progView>/numSemanaBind', formatter: '.formatter.formatSemana'}" textAlign="Center" width="auto"/>
+						<ToolbarSpacer/>
+						<Button id="btnProx" text="{i18n>btrProxima}" enabled="{progView>/btnProxEnabled}" iconFirst="false" icon="sap-icon://open-command-field"
+							visible="true" press="moveSemana('proximo')"/>
+						<ToolbarSpacer/>
+						<Label text="" width="8rem"/>
+						<ToolbarSpacer/>
+					</Toolbar>
+				</table:extension>
+				<table:columns>
+					<table:Column headerSpan="4" width="10rem">
+						<table:multiLabels>
+							<Label text=""/>
+							<Label text="{i18n>cliente}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>DEN_CLIENTE}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="6rem">
+						<table:multiLabels>
+							<Label text=""/>
+							<Label text="{i18n>incoterm}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>INCOTERMS}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:multiLabels>
+							<Label text=""/>
+							<Label text="{i18n>caminhao}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Select width="11rem" selectedKey="{progView>CODCAM}" enabled="{progView>/SelCaminhaoEnabled}"
+								items="{ path: 'progView>/listaCaminhoes'}">
+								<core:Item key="{progView>CODCAM}" text="{progView>DESCAM}"/>
+							</Select>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text=""/>
+							<Label text="{i18n>filial}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>WERKS}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column headerSpan="2">
+						<table:multiLabels>
+							<Label text="{i18n>saldoCliente}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>mensal}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>MENSAL}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels >
+							<Label text="{i18n>saldoCliente}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>total}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>TOTAL}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text="{path: 'progView>/diaMes/DIASEG', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>seg}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input valueState="{path:'progView>STATUS_SEG', formatter: '.formatter.setInputColor'}" showValueStateMessage="false"
+								enabled="{progView>/inpEnabled}" change="checarCarga" value="{progView>SEG}" liveChange="calculoCota" textAlign="Center" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text="{path: 'progView>/diaMes/DIATER', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>ter}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input change="checarCarga" valueState="{path:'progView>STATUS_TER', formatter: '.formatter.setInputColor'}" showValueStateMessage="false"
+								value="{path:'progView>TER'}" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text="{path: 'progView>/diaMes/DIAQUA', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>qua}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input change="checarCarga" value="{progView>QUA}" valueState="{path:'progView>STATUS_QUA', formatter: '.formatter.setInputColor'}"
+								showValueStateMessage="false" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text="{path: 'progView>/diaMes/DIAQUI', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>qui}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input change="checarCarga" value="{progView>QUI}" valueState="{path:'progView>STATUS_QUI', formatter: '.formatter.setInputColor'}"
+								showValueStateMessage="false" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text="{path: 'progView>/diaMes/DIASEX', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>sex}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input change="checarCarga" value="{progView>SEX}" valueState="{path:'progView>STATUS_SEX', formatter: '.formatter.setInputColor'}"
+								showValueStateMessage="false" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Text text="{path: 'progView>/diaMes/DIASAB', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Label text="{i18n>sab}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input change="checarCarga" value="{progView>SAB}" valueState="{path:'progView>STATUS_SAB', formatter: '.formatter.setInputColor'}"
+								showValueStateMessage="false" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="auto">
+						<table:multiLabels>
+							<Label text=" {path: 'progView>/diaMes/DIADOM', formatter: '.formatter.formatDiaMes'}" textAlign="Center" width="100%"/>
+							<Text text="{i18n>dom}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Input change="checarCarga" value="{progView>DOM}" valueState="{path:'progView>STATUS_DOM', formatter: '.formatter.setInputColor'}"
+								showValueStateMessage="false" enabled="{progView>/inpEnabled}" textAlign="Center" liveChange="calculoCota" width="100%"></Input>
+						</table:template>
+					</table:Column>
+					<table:Column width="10rem">
+						<table:multiLabels>
+							<Label text=""/>
+							<Label text="{i18n>repetirProg}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<MultiComboBox selectionChange="onRepetirProg" width="13rem" items="{ path: 'progView>/repetirSemanas', sorter: { path: 'LISTA_SEMANAS' } }">
+								<core:Item key="{progView>ID_SEMANA}" text="{progView>DESC_SEMANA}"/>
+							</MultiComboBox>
+						</table:template>
+					</table:Column>
+					<table:Column width="10rem">
+						<table:multiLabels>
+							<Label text=""/>
+							<Label text="{i18n>pagamento}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Select width="9rem" selectedKey="{progView>ZTERM}" items="{ path: 'progView>/listaPagamentos'}" forceSelection="false" enabled="{progView>/SelPagEnabled}">
+								<core:Item key="{progView>COD_PAGTO}" text="{progView>NOME_PAGTO}"/>
+							</Select>
+						</table:template>
+					</table:Column>
+					<table:Column headerSpan="3" width="6rem">
+						<table:multiLabels>
+							<Label text="Credito" textAlign="Center" width="100%"/>
+							<Label text="{i18n>credito}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>CREDITO}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column width="8rem">
+						<table:multiLabels >
+							<Label text=""/>
+							<Label text="{i18n>credPend}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>CRED_PEND}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+					<table:Column>
+						<table:multiLabels >
+							<Label text=""/>
+							<Label text="{i18n>status}" textAlign="Center" width="100%"/>
+						</table:multiLabels>
+						<table:template>
+							<Text text="{progView>STATUS}" textAlign="Center" width="100%"/>
+						</table:template>
+					</table:Column>
+				</table:columns>
+			</table:Table>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button id="idDetalhe" tooltip="{i18n>tooltipDetalhar}" visible="{progView>/btnVisibility}" text="{i18n>btnDetalhe}" type="Ghost" press="btnOpenDetalhe"/>
+				<Button id="idGravar" tooltip="{i18n>tooltipGravar}" text="{i18n>btnGrava}" type="Ghost" press="onBtnSalvarProg"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

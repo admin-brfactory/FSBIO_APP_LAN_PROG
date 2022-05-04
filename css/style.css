@@ -11,10 +11,10 @@
     	font-size: 0.775rem !important;
     }
     .sapMText {
-    	font-size: 0.575rem !important;
+    	font-size: 0.575rem;
     }
     .sapMLabel {
-    	font-size: 0.575rem !important;
+    	font-size: 0.775rem !important;
     }
     .sapMSelectListItemBase {
     	font-size: 0.575rem !important;
@@ -27,6 +27,9 @@
     }
     .sapUiSizeCompact .sapMSLITitleOnly {
     	font-size: 0.575rem !important;
+    }
+    .textNomeVed {
+    	font-size: 0.775rem !important;
     }
 }
 
@@ -41,10 +44,10 @@
     	font-size: 0.875rem !important;
     }
     .sapMText {
-    	font-size: 0.675rem !important;
+    	font-size: 0.675rem;
     }
     .sapMLabel {
-    	font-size: 0.675rem !important;
+    	font-size: 0.875rem !important;
     }
     .sapMSelectListItemBase {
     	font-size: 0.675rem !important;
@@ -58,4 +61,10 @@
     .sapUiSizeCompact .sapMSLITitleOnly {
     	font-size: 0.675rem !important;
     }
+    .textNomeVed {
+    	font-size: 0.875rem !important;
+    }
 }
+
+
+

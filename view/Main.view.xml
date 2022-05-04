@@ -6,7 +6,7 @@
 				<VBox class="sapUiLargeMarginTopBottom sapUiLargeMarginEnd">
 					<HBox class="sapUiMediumMarginBeginEnd">
 						<Label text="{i18n>vendedor}" design="Bold"/>
-						<Text id="vendedor" text="{progView>/vendedor/NOME_VENDEDOR}" class="sapUiTinyMarginBottom sapUiTinyMarginBegin"/>
+						<Text id="vendedor" text="{progView>/vendedor/NOME_VENDEDOR}" class="sapUiTinyMarginBottom sapUiTinyMarginBegin textNomeVed"/>
 					</HBox>
 					<HBox class="sapUiMediumMarginBeginEnd">
 						<Label text="{i18n>produto}" design="Bold" class="sapUiTinyMargin"/>

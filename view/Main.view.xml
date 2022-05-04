@@ -18,7 +18,7 @@
 				</VBox>
 				<table:Table id="table2" ariaLabelledBy="title" selectionMode="None" rows="{progView>/cotasDiarias}" visibleRowCount="3" width="60%">
 					<table:columns>
-						<table:Column width="13rem">
+						<table:Column width="7rem">
 							<table:multiLabels>
 								<Label text="" textAlign="Center" width="100%"/>
 							</table:multiLabels>

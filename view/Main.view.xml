@@ -1,13 +1,13 @@
 <mvc:View controllerName="com.fsBioenergiaZLAN_PROG_ENTREGA.controller.Main" xmlns:table="sap.ui.table" xmlns:mvc="sap.ui.core.mvc"
-	xmlns="sap.m" xmlns:core="sap.ui.core" height="100%">
+	xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" height="100%">
 	<Page showHeader="false" enableScrolling="false" class="sapUiContentPadding">
 		<content>
 			<HBox>
 				<VBox class="sapUiLargeMarginTopBottom sapUiLargeMarginEnd">
-					<HBox class="sapUiMediumMarginBeginEnd">
-						<Label text="{i18n>vendedor}" design="Bold"/>
-						<Text id="vendedor" text="{progView>/vendedor/NOME_VENDEDOR}" class="sapUiTinyMarginBottom sapUiTinyMarginBegin textNomeVed"/>
-					</HBox>
+					<l:HorizontalLayout class="sapUiMediumMarginBeginEnd">
+                        <Label text="{i18n>vendedor}" design="Bold"/>
+                        <Text id="vendedor" text="{progView>/vendedor/NOME_VENDEDOR}" class="sapUiTinyMarginBottom sapUiTinyMarginBegin textNomeVed"/>
+                    </l:HorizontalLayout>
 					<HBox class="sapUiMediumMarginBeginEnd">
 						<Label text="{i18n>produto}" design="Bold" class="sapUiTinyMargin"/>
 						<Select id="produto" width="11rem" items="{ path: 'progView>/listaProdutos'}">

@@ -488,10 +488,11 @@ sap.ui.define([
 			var oModel = this.getOwnerComponent().getModel();
 			var oViewModel = this.getView().getModel("progView");
 			oViewModel.setProperty("/produtoSelecionado", this.getView().byId("produto").getSelectedKey());
-			var usuario = oViewModel.getProperty("/vendedor/COD_VENDEDOR");
+			var cod_vendedor = oViewModel.getProperty("/vendedor/COD_VENDEDOR");
+			var usuario = sap.ushell.Container.getService("UserInfo").getId();
 			var semana = oViewModel.getProperty("/numSemanaAtual");
 			var produto = this.getView().byId('produto').getSelectedKey();
-			var sUrl = "/GET_PROGRAMACAOSet(USUARIO='" + usuario + "',SEMANA='" + semana + "',PRODUTO='" + produto + "')";
+			var sUrl = "/GET_PROGRAMACAOSet(USUARIO='" + usuario + "',SEMANA='" + semana + "',PRODUTO='" + produto + "',COD_VENDEDOR='" + cod_vendedor + "')";
 
 			sap.ui.core.BusyIndicator.show();
 

@@ -56,7 +56,7 @@ sap.ui.define([
 			this.getProgramacao();
 
 		},
-		
+
 		// Função usada para repetir programação
 		onRepetirProg: function(oEvent) {
 			var oModel = this.getOwnerComponent().getModel();
@@ -67,10 +67,11 @@ sap.ui.define([
 				return;
 			}
 
-			var cliente = oEvent.getSource().getParent().getCells()[0].getText();
 			var linhaRepet = oEvent.getSource().getParent().getBindingContext('progView').getPath();
+			var seqItem = oViewModel.getProperty(linhaRepet).SEQ_ITEM;
 			var tabProgGeral = oViewModel.getProperty("/tabProgGeral");
 			var tabBind = oViewModel.getProperty(linhaRepet);
+			var tabCompara;
 
 			for (var i = 0; i < semanaSelec.length; i++) {
 
@@ -81,7 +82,9 @@ sap.ui.define([
 					return;
 				}
 
-				var tabAux2 = tabGeralAux[0].DADOS_SEMANA.filter(indice => indice.DEN_CLIENTE == cliente);
+				var tabAux2 = tabGeralAux[0].DADOS_SEMANA.filter(indice => indice.SEQ_ITEM == seqItem);
+
+				tabCompara = JSON.stringify(tabAux2);
 				tabAux2[0].SEG = tabBind.SEG;
 				tabAux2[0].TER = tabBind.TER;
 				tabAux2[0].QUA = tabBind.QUA;
@@ -90,15 +93,101 @@ sap.ui.define([
 				tabAux2[0].SAB = tabBind.SAB;
 				tabAux2[0].DOM = tabBind.DOM;
 
-				var tabAux3 = tabGeralAux[0].DADOS_SEMANA.filter(indice => indice.CLIENTE != cliente);
+				this.recalcularProgramado(semanaSelec[i], linhaRepet, seqItem, tabBind, tabCompara);
+			}
+		},
 
-				tabAux3.push(tabAux2[0]);
+		recalcularProgramado: function(sSemana, sLinhaRepet, sSeqItem, sTabBind, sTabCompara) {
+			var oModel = this.getOwnerComponent().getModel();
+			var oViewModel = this.getView().getModel("progView");
+			var tabProgGeral = oViewModel.getProperty("/tabProgGeral");
+			var semanaSelec = sSemana;
+			var linhaRepet = sLinhaRepet;
+			var tabBind = sTabBind;
+			var seqItem = sSeqItem;
+			var progSeg = 0,
+				progTer = 0,
+				progQua = 0,
+				progQui = 0,
+				progSex = 0,
+				progSab = 0,
+				progDom = 0;
+			var vaidaSaldo = true;
 
-				tabProgGeral = tabProgGeral.filter(indice => indice.SEMANA != semanaSelec);
+			var tabGeralAux = tabProgGeral.filter(indice => indice.SEMANA == semanaSelec);
 
-				tabProgGeral.push(tabGeralAux[0]);
+			if (tabGeralAux == "[]" || tabGeralAux == null) {
+				MessageBox.error(this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("msgErrorInesperado"));
+				return;
+			}
 
-				oViewModel.setProperty("/tabProgGeral", tabProgGeral);
+			var cotaDiaria = tabGeralAux[0].COTAS_DIARIAS_SEM[0];
+			var programado = tabGeralAux[0].COTAS_DIARIAS_SEM[1];
+			var saldoDiario = tabGeralAux[0].COTAS_DIARIAS_SEM[2];
+
+			for (var i in tabGeralAux[0].DADOS_SEMANA) {
+
+				progSeg = progSeg + parseInt(tabGeralAux[0].DADOS_SEMANA[i].SEG);
+				progTer = progTer + parseInt(tabGeralAux[0].DADOS_SEMANA[i].TER);
+				progQua = progQua + parseInt(tabGeralAux[0].DADOS_SEMANA[i].QUA);
+				progQui = progQui + parseInt(tabGeralAux[0].DADOS_SEMANA[i].QUI);
+				progSex = progSex + parseInt(tabGeralAux[0].DADOS_SEMANA[i].SEX);
+				progSab = progSab + parseInt(tabGeralAux[0].DADOS_SEMANA[i].SAB);
+				progDom = progDom + parseInt(tabGeralAux[0].DADOS_SEMANA[i].DOM);
+
+				if (progSeg > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].SEG)) {
+					vaidaSaldo = false;
+				} else if (progTer > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].TER)) {
+					vaidaSaldo = false;
+				} else if (progQua > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].QUA)) {
+					vaidaSaldo = false;
+				} else if (progQui > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].QUI)) {
+					vaidaSaldo = false;
+				} else if (progSex > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].SEX)) {
+					vaidaSaldo = false;
+				} else if (progSab > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].SAB)) {
+					vaidaSaldo = false;
+				} else if (progDom > parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].DOM)) {
+					vaidaSaldo = false;
+				}
+			}
+
+			if (vaidaSaldo == true) {
+
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].SEG = progSeg;
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].TER = progTer;
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].QUA = progQua;
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].QUI = progQui;
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].SEX = progSex;
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].SAB = progSab;
+				tabGeralAux[0].COTAS_DIARIAS_SEM[1].DOM = progDom;
+
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].SEG = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].SEG) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].SEG);
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].TER = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].TER) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].TER);
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].QUA = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].QUA) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].QUA);
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].QUI = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].QUI) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].QUI);
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].SEX = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].SEX) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].SEX);
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].SAB = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].SAB) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].SAB);
+				tabGeralAux[0].COTAS_DIARIAS_SEM[2].DOM = parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[0].DOM) - parseInt(tabGeralAux[0].COTAS_DIARIAS_SEM[
+					1].DOM);
+
+			} else {
+				sTabCompara = JSON.parse(sTabCompara);
+				var tabAux3 = tabGeralAux[0].DADOS_SEMANA.filter(indice => indice.SEQ_ITEM == seqItem);
+				tabAux3[0].SEG = sTabCompara[0].SEG;
+				tabAux3[0].TER = sTabCompara[0].TER;
+				tabAux3[0].QUA = sTabCompara[0].QUA;
+				tabAux3[0].QUI = sTabCompara[0].QUI;
+				tabAux3[0].SEX = sTabCompara[0].SEX;
+				tabAux3[0].SAB = sTabCompara[0].SAB;
+				tabAux3[0].DOM = sTabCompara[0].DOM;
+				MessageToast.show("Saldo diário excedido na semana indicada");
 			}
 		},
 
@@ -107,17 +196,17 @@ sap.ui.define([
 			var oViewModel = this.getView().getModel("progView");
 			var getLinha = this.getView().byId("table3").getSelectedIndices();
 			var dadosCancelar = [];
-			
+
 			if (getLinha.length == 0) {
 				MessageToast.show(this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("msgLinhaNaoSelec"));
 				return;
 			}
-			
-			for ( var i = 0; i < getLinha.length; i++){
+
+			for (var i = 0; i < getLinha.length; i++) {
 				var linhaSelecionadaBindCan = this.getView().byId("table3").getBindingInfo("rows").binding.getPath() + "/" + getLinha[i];
 				var oDadosSelec = oViewModel.getProperty(linhaSelecionadaBindCan);
 				dadosCancelar.push(oDadosSelec)
-				
+
 				var justificativa = oDadosSelec.ID_JUSTIFICATIVA;
 				if (!justificativa) {
 					MessageBox.error(this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("msgSelecJustif"));
@@ -125,10 +214,10 @@ sap.ui.define([
 				}
 			}
 
-			 dadosCancelar = JSON.stringify(dadosCancelar);
+			dadosCancelar = JSON.stringify(dadosCancelar);
 
 			var oEntry = {
-				
+
 				DADOS_CANCELAR: dadosCancelar,
 
 			};
@@ -137,7 +226,7 @@ sap.ui.define([
 			oModel.create("/CANCELAR_PROGRAMACAOSet", oEntry, {
 				success: function(oData) {
 					sap.ui.core.BusyIndicator.hide();
-					
+
 					if (oData.MSG_RETORNO) {
 						var msg = JSON.parse(oData.MSG_RETORNO)
 
@@ -199,6 +288,7 @@ sap.ui.define([
 								MessageBox.error(msg[0].MESSAGE);
 							} else if (msg[0].TYPE === "S") {
 								MessageBox.success(msg[0].MESSAGE);
+								this.getProgramacao();
 							}
 						}
 					}
@@ -291,7 +381,7 @@ sap.ui.define([
 			var vendedor = oViewModel.getProperty("/vendedor/COD_VENDEDOR");
 			var centro = oDadosSelec.WERKS;
 			var incoterm = oDadosSelec.INCOTERMS;
-			var cliente = oDadosSelec.CLIENTE; 
+			var cliente = oDadosSelec.CLIENTE;
 			var material = oViewModel.getProperty("/produtoSelecionado");
 			var sURL = "/GET_CARGASet(SEMANA='" + semana + "',VENDEDOR='" + vendedor + "',MATERIAL='" + material + "',CENTRO='" + centro +
 				"',INCOTERM='" + incoterm + "',CLIENTE='" + cliente + "')";
@@ -309,8 +399,7 @@ sap.ui.define([
 						var listIncoterm = JSON.parse(oData.LISTA_INCOTERMS)
 						oViewModel.setProperty("/listIncoterm", listIncoterm)
 					}
-					
-					
+
 				}.bind(this),
 				error: function(oError) {
 					sap.ui.core.BusyIndicator.hide();
@@ -492,7 +581,8 @@ sap.ui.define([
 			var usuario = sap.ushell.Container.getService("UserInfo").getId();
 			var semana = oViewModel.getProperty("/numSemanaAtual");
 			var produto = this.getView().byId('produto').getSelectedKey();
-			var sUrl = "/GET_PROGRAMACAOSet(USUARIO='" + usuario + "',SEMANA='" + semana + "',PRODUTO='" + produto + "',COD_VENDEDOR='" + cod_vendedor + "')";
+			var sUrl = "/GET_PROGRAMACAOSet(USUARIO='" + usuario + "',SEMANA='" + semana + "',PRODUTO='" + produto + "',COD_VENDEDOR='" +
+				cod_vendedor + "')";
 
 			sap.ui.core.BusyIndicator.show();
 
@@ -766,7 +856,7 @@ sap.ui.define([
 			}
 			oViewModel.setProperty("/diaMes", diaMesArray);
 		},
-		
+
 		// Evento disparado ao mudar a semana em tela 
 		moveSemana: function(NextPrev) {
 			var oViewModel = this.getView().getModel("progView");
@@ -779,13 +869,18 @@ sap.ui.define([
 			var dia = data.getDay();
 			var oViewModel = this.getView().getModel("progView");
 			var semanaAtual = oViewModel.getProperty("/numSemanaAtual");
-
+			var tabProg = oViewModel.getProperty("/tabProg");
+			var oTable = this.getView().byId("table1");
 			var tabProgGeral = oViewModel.getProperty("/tabProgGeral");
 			var ano = data.getFullYear();
 			var tabBind, semana_aux;
 			semana_aux = numSemana;
 
 			tabBind = tabProgGeral.filter(indice => indice.SEMANA == semana_aux);
+
+			for (var i in tabProg) {
+				oTable.getRows()[i].getCells()[13].removeAllSelectedItems();
+			}
 
 			if (NextPrev == 'proximo') {
 
@@ -1021,7 +1116,7 @@ sap.ui.define([
 			this.byId(sID).close();
 			this.limpaTabSelections('table3');
 			this.limparCampos();
-			
+
 		},
 
 		limpaTabSelections: function(sID) {
@@ -1032,7 +1127,6 @@ sap.ui.define([
 		onBtnSalvarProg: function(oEvent) {
 			this.salvarProg();
 			this.limpaTabSelections('table1');
-			this.getProgramacao();
 		},
 
 		//Verifica se o valor do campo é númerico

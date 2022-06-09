@@ -1,36 +1,29 @@
 {
     "resources": [
         {
-            "name": "neo-app.json"
+            "name": "css/style.css"
         },
         {
-            "name": ".user.project.json"
-        },
-        {
-            "name": "localService/metadata.xml"
-        },
-        {
-            "name": "controller/Main.controller.js"
-        },
-        {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
-        },
-        {
-            "name": "index.html"
+            "name": "resources.json",
+            "merged": true
         },
         {
             "name": "Component.js"
         },
         {
+            "name": "localService/metadata.xml"
+        },
+        {
+            "name": ".user.project.json"
+        },
+        {
+            "name": "controller/Main.controller.js"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
             "name": ".project.json"
-        },
-        {
-            "name": "manifest.json"
-        },
-        {
-            "name": "Component-preload.js",
-            "merged": true
         },
         {
             "name": "model/formatter.js"
@@ -39,14 +32,18 @@
             "name": "model/models.js"
         },
         {
-            "name": "resources.json",
+            "name": "index.html"
+        },
+        {
+            "name": "Component-preload.js",
             "merged": true
         },
         {
-            "name": "css/style.css"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
-            "name": "view/Main.view.xml"
+            "name": "README.md"
         },
         {
             "name": "view/fragments/encaixe.fragment.xml"
@@ -56,6 +53,12 @@
         },
         {
             "name": "view/fragments/cancelar.fragment.xml"
+        },
+        {
+            "name": "view/Main.view.xml"
+        },
+        {
+            "name": "manifest.json"
         }
     ]
 }
